@@ -9,7 +9,7 @@ public class User {
     private int age;
     private Sex sex;
 
-    private static Map<Integer, User> allUsers;
+    private static HashMap<Integer, User> allUsers;
 
     private static int countId = 0;
 
@@ -36,6 +36,11 @@ public class User {
         return age == user.age &&
                 name.equals(user.name) &&
                 sex == user.sex;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(name, age, sex);
     }
 
     private boolean hasUser(){
@@ -67,6 +72,30 @@ public class User {
 
     public static int getCount(Sex sex) {
         return getAllUsers(sex).size();
+    }
+
+    public static int getSumAgeUsers() {
+        int counter = 0;
+        for (User user: allUsers.values()) {
+            counter += user.age;
+        }
+        return counter;
+    }
+
+    public static int getSumAgeUsers(Sex sex) {
+        int counter = 0;
+        for (User user: getAllUsers(sex)) {
+            counter += user.age;
+        }
+        return counter;
+    }
+
+    public static double getAvgAgeUsers() {
+        return getSumAgeUsers() / getCount();
+    }
+
+    public static double getAvgAgeUsers(Sex sex) {
+        return getSumAgeUsers(sex) / getCount(sex);
     }
 
     @Override
